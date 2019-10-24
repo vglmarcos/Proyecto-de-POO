@@ -41,16 +41,21 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 
 		//iniciamos conexion a la db
 		db = new Conexion();
-		db.conectar();
+		try {
+			db.conectar();
+			System.out.println("Se ha establecido conexion a la base de datos.");
+		} catch(SQLException err) {
+			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 
-		try{
+		try {
 			st = db.getConexion().createStatement();
 			rs = st.executeQuery("SELECT MAX(id_cot) FROM Cotizacion");
 			rs.next();
 			id = rs.getInt(1); //maxima id de cotizaciones
-			System.out.println("Se ha establecido conexion a la base de datos.");
-		} catch(SQLException e) {
-			JOptionPane.showMessageDialog(null, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+		} catch(SQLException err) {
+			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 
@@ -156,8 +161,12 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 			Menu m = new Menu("Men\u00FA");
 			m.setVisible(true);
 			this.setVisible(false);
-			db.desconectar();
-			System.out.println("Se ha desconectado de la base de datos.");
+			try {
+				db.desconectar();
+				System.out.println("Se ha desconectado de la base de datos.");
+			} catch(SQLException err) {
+				JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -182,8 +191,12 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 			Menu m = new Menu("Men\u00FA");
 			m.setVisible(true);
 			this.setVisible(false);
-			db.desconectar();
-			System.out.println("Se ha desconectado de la base de datos.");
+			try {
+				db.desconectar();
+				System.out.println("Se ha desconectado de la base de datos.");
+			} catch(SQLException err) {
+				JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 

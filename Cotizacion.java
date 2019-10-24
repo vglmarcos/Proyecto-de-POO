@@ -44,12 +44,6 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		try {
 			db.conectar();
 			System.out.println("Se ha establecido conexion a la base de datos.");
-		} catch(SQLException err) {
-			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
-
-		try {
 			st = db.getConexion().createStatement();
 			rs = st.executeQuery("SELECT MAX(id_cot) FROM Cotizacion");
 			rs.next();
@@ -57,8 +51,7 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		} catch(SQLException err) {
 			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 		}
-
-
+		
 		no_cot = new JLabel("No. Cotizaci\u00F3n");
 		no_cot.setBounds(30, 70, 150, 30);
 		no_cot.setFont(new Font("Tahoma", 1, 16));

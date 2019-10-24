@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 
 public class Login extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener {
 
@@ -11,6 +12,10 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 	private Color color = new Color(50, 203, 185);
 	private Color blanco = new Color(255, 255, 255);
 	private Color label = new Color(224, 224, 224);
+	private Conexion db;
+	private Statement st;
+	private ResultSet rs;
+	private Boolean existe;
 
 	public Login(String title) {
 		this.setLayout(null);
@@ -21,6 +26,15 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(blanco);
 		this.setIconImage(new ImageIcon(getClass().getResource("images/Logo.png")).getImage());
+
+		//iniciamos conexion a la db
+		db = new Conexion();
+		try {
+			db.conectar();
+			System.out.println("Se ha establecido conexion a la base de datos.");
+		} catch(SQLException err) {
+			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+		}
 
 		ImageIcon empresa_imagen = new ImageIcon("images/San-Roman-Logo.png");
 		empresa = new JLabel(empresa_imagen);
@@ -93,15 +107,31 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 			if(usuario1.isEmpty() || password1.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.", "Error", 
 				JOptionPane.ERROR_MESSAGE);
-			} else if(usuario1.equals("Numpy") && password1.equals("126522")) {
-				JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
-				JOptionPane.INFORMATION_MESSAGE);
-				Menu m = new Menu("Men\u00FA");
-				m.setVisible(true);
-				this.setVisible(false);
 			} else {
-				JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.",
-				"Error", JOptionPane.ERROR_MESSAGE);
+				try {
+					st = db.getConexion().createStatement();
+					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario WHERE nom_usu = '" + usuario1 + 
+					"' AND contra_usu = '" + password1 + "'");
+					existe = rs.next();
+				} catch(SQLException err) {
+					JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				if(existe) {
+					try {
+						db.desconectar();
+						System.out.println("Se ha desconectado de la base de datos.");
+					} catch (SQLException err) {
+						JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
+					JOptionPane.INFORMATION_MESSAGE);
+					Menu m = new Menu("Men\u00FA");
+					m.setVisible(true);
+					this.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.",
+					"Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}
@@ -126,15 +156,31 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 			if(usuario1.isEmpty() || password1.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.", "Error", 
 				JOptionPane.ERROR_MESSAGE);
-			} else if(usuario1.equals("Numpy") && password1.equals("126522")) {
-				JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
-				JOptionPane.INFORMATION_MESSAGE);
-				Menu m = new Menu("Men\u00FA");
-				m.setVisible(true);
-				this.setVisible(false);
 			} else {
-				JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.", "Error", 
-				JOptionPane.ERROR_MESSAGE);
+				try {
+					st = db.getConexion().createStatement();
+					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario WHERE nom_usu = '" + usuario1 + 
+					"' AND contra_usu = '" + password1 + "'");
+					existe = rs.next();
+				} catch(SQLException err) {
+					JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				if(existe) {
+					try {
+						db.desconectar();
+						System.out.println("Se ha desconectado de la base de datos.");
+					} catch (SQLException err) {
+						JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
+					JOptionPane.INFORMATION_MESSAGE);
+					Menu m = new Menu("Men\u00FA");
+					m.setVisible(true);
+					this.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.",
+					"Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}

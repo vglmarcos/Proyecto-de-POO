@@ -27,13 +27,13 @@ public class Menu extends JFrame implements ActionListener, KeyListener, FocusLi
 		this.setJMenuBar(mb);
 
 		opciones = new JMenu("Opciones");
-		opciones.setFont(new Font("Tahoma", 1, 14));
+		opciones.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		opciones.setForeground(blanco);
 		opciones.setBackground(color);
 		mb.add(opciones);
 
 		cerrar = new JMenuItem("Cerrar sesi\u00F3n");
-		cerrar.setFont(new Font("Tahoma", 1, 14));
+		cerrar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		cerrar.setForeground(color);
 		opciones.add(cerrar);
 		cerrar.addActionListener(this);
@@ -41,7 +41,7 @@ public class Menu extends JFrame implements ActionListener, KeyListener, FocusLi
 		cot = new JButton("Generar cotizaci\u00F3n");
 		cot.setBounds(240, 350, 180, 30);
 		cot.setBackground(color);
-		cot.setFont(new Font("Tahoma", 1, 14));
+		cot.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		cot.setForeground(blanco);
 		cot.addActionListener(this);
 		cot.addKeyListener(this);

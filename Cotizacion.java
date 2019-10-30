@@ -8,10 +8,9 @@ import javax.swing.table.*;
 public class Cotizacion extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener {
 
 	private Color blanco = new Color(255, 255, 255);
-	private Color color = new Color(50, 203, 185);
 	private Color label = new Color(224, 224, 224);
 	private JButton regresar, agregar, guardar;
-	private JLabel tira, no_cot, fechaLabel, total, iva;
+	private JLabel tira, no_cot, fechaLabel, total, iva, sbt;
 	private JTextField no_cotField;
 	private Conexion db;
 	private Statement st;
@@ -54,29 +53,29 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		
 		no_cot = new JLabel("No. Cotizaci\u00F3n");
 		no_cot.setBounds(30, 70, 150, 30);
-		no_cot.setFont(new Font("Tahoma", 1, 16));
-		no_cot.setForeground(color);
+		no_cot.setFont(new Font("Microsoft New Tai Lue", 1, 16));
+		no_cot.setForeground(new Color(0, 153, 153));
 		add(no_cot);
 
 		no_cotField = new JTextField();
 		no_cotField.setBounds(170, 70, 50, 30);
 		no_cotField.setBackground(label);
-		no_cotField.setFont(new Font("Tahoma", 1, 14));
+		no_cotField.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		no_cotField.setText(Integer.valueOf(id).toString());
 		no_cotField.setHorizontalAlignment(JTextField.CENTER); 
 		no_cotField.setEditable(false);
-		no_cotField.setForeground(color);
+		no_cotField.setForeground(new Color(0, 153, 153));
 		no_cotField.addKeyListener(this);
 		add(no_cotField);
 
 		fechaLabel = new JLabel("Fecha: " + dia + "/" + mes + "/" + anio);
 		fechaLabel.setBounds(620, 70, 200, 30);
-		fechaLabel.setFont(new Font("Tahoma", 1, 16));
-		fechaLabel.setForeground(color);
+		fechaLabel.setFont(new Font("Microsoft New Tai Lue", 1, 16));
+		fechaLabel.setForeground(new Color(0, 0, 0));
 		add(fechaLabel);
 
-		String[] campos = new String[]{"Id", "Nombre", "Largo", "Ancho", "Tipo", "Cantidad", 
-									   "Precio unitario", "Precio total", "Subtotal"};
+		String[] campos = new String[]{"Id", "Nombre", "Tipo", "Precio unitario", "Largo", "Ancho", 
+									   "Cantidad", "Precio total"};
 
 		modelo = new DefaultTableModel(null, campos);
         tabla = new JTable(modelo) {
@@ -90,34 +89,48 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
         tabla.getTableHeader().setResizingAllowed(false);
         scroll = new JScrollPane(tabla);
 		scroll.setBounds(30, 120, 750, 250);
-		tabla.getColumnModel().getColumn(0).setPreferredWidth(30); //id
-		tabla.getColumnModel().getColumn(1).setPreferredWidth(150); //Nombre
-		tabla.getColumnModel().getColumn(2).setPreferredWidth(60); //Largo
-		tabla.getColumnModel().getColumn(3).setPreferredWidth(60); //Ancho
-		tabla.getColumnModel().getColumn(4).setPreferredWidth(80); //Tipo
-		tabla.getColumnModel().getColumn(5).setPreferredWidth(60); //Cantidad
-		tabla.getColumnModel().getColumn(6).setPreferredWidth(90); //Precio unitario
-		tabla.getColumnModel().getColumn(7).setPreferredWidth(80); //Precio total
-		tabla.getColumnModel().getColumn(8).setPreferredWidth(80); //Subtotal
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(30); //Id
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(160); //Nombre
+		tabla.getColumnModel().getColumn(2).setPreferredWidth(80); //Tipo
+		tabla.getColumnModel().getColumn(3).setPreferredWidth(120); //Precio unitario
+		tabla.getColumnModel().getColumn(4).setPreferredWidth(80); //Largo
+		tabla.getColumnModel().getColumn(5).setPreferredWidth(80); //Ancho
+		tabla.getColumnModel().getColumn(6).setPreferredWidth(100); //Cantidad
+		tabla.getColumnModel().getColumn(7).setPreferredWidth(100); //Precio total
 		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		tabla.getTableHeader().setFont(new Font("Microsoft New Tai Lue", 1, 14)); 
+		tabla.getTableHeader().setForeground(new Color(255, 255, 255)); 
+		tabla.getTableHeader().setBackground(new Color(0, 153, 153)); 
+		tabla.setBackground(new Color(255, 255, 255));
+		tabla.setForeground(new Color(0, 0, 0));
+		tabla.setFont(new Font("Microsoft New Tai Lue", 0, 14));
 		this.add(scroll);
 
+		modelo.addRow(new String[]{"1", "Cristal", "Barandal", "1200", "800", "600", "5", "1200"});
+		modelo.addRow(new String[]{"2", "Cristal", "Barandal", "1200", "800", "600", "5", "1200"});
+		
+		sbt = new JLabel("Subtotal: 0");
+		sbt.setBounds(690, 390, 100, 30);
+		sbt.setFont(new Font("Microsoft New Tai Lue", 1, 16));
+		sbt.setForeground(new Color(0, 0, 0));
+		add(sbt);
+
 		iva = new JLabel("IVA: 16 \u0025");
-		iva.setBounds(690, 390, 100, 30);
-		iva.setFont(new Font("Tahoma", 1, 16));
-		iva.setForeground(color);
+		iva.setBounds(690, 420, 100, 30);
+		iva.setFont(new Font("Microsoft New Tai Lue", 1, 16));
+		iva.setForeground(new Color(0, 0, 0));
 		add(iva);
 		
 		total = new JLabel("Total: \u0024 0");
-		total.setBounds(690, 420, 100, 30);
-		total.setFont(new Font("Tahoma", 1, 16));
-		total.setForeground(color);
+		total.setBounds(690, 450, 100, 30);
+		total.setFont(new Font("Microsoft New Tai Lue", 1, 16));
+		total.setForeground(new Color(0, 0, 0));
 		add(total);
 
 		regresar = new JButton("Regresar");
 		regresar.setBounds(120, 480, 100, 30);
-		regresar.setBackground(color);
-		regresar.setFont(new Font("Tahoma", 1, 14));
+		regresar.setBackground(new Color(0, 153, 153));
+		regresar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		regresar.setForeground(blanco);
 		regresar.addActionListener(this);
 		regresar.addKeyListener(this);
@@ -125,8 +138,8 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 
 		agregar = new JButton("Agregar");
 		agregar.setBounds(320, 480, 100, 30);
-		agregar.setBackground(color);
-		agregar.setFont(new Font("Tahoma", 1, 14));
+		agregar.setBackground(new Color(0, 153, 153));
+		agregar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		agregar.setForeground(blanco);
 		agregar.addActionListener(this);
 		agregar.addKeyListener(this);
@@ -134,8 +147,8 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 
 		guardar = new JButton("Guardar");
 		guardar.setBounds(520, 480, 100, 30);
-		guardar.setBackground(color);
-		guardar.setFont(new Font("Tahoma", 1, 14));
+		guardar.setBackground(new Color(0, 153, 153));
+		guardar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		guardar.setForeground(blanco);
 		guardar.addActionListener(this);
 		guardar.addKeyListener(this);

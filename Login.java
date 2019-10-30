@@ -43,14 +43,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 
 		usuario = new JLabel("Usuario");
 		usuario.setBounds(80, 250, 100, 30);
-		usuario.setFont(new Font("Tahoma", 1, 16));
+		usuario.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		usuario.setForeground(color);
 		add(usuario);
 
 		usuarioField = new JTextField();
 		usuarioField.setBounds(200, 250, 250, 30);
 		usuarioField.setBackground(label);
-		usuarioField.setFont(new Font("Tahoma", 1, 14));
+		usuarioField.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		usuarioField.setForeground(color);
 		usuarioField.addKeyListener(this);
 		usuarioField.addFocusListener(this);
@@ -58,7 +58,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 
 		password = new JLabel("Contrase\u00f1a");
 		password.setBounds(80, 300, 100, 30);
-		password.setFont(new Font("Tahoma", 1, 16));
+		password.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		password.setForeground(color);
 		add(password);
 
@@ -72,14 +72,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 
 		derechos = new JLabel("Cristaler\u00eda San Rom\u00e1n. \u00A9 Copyright 2019. Todos los derechos reservados.");
 		derechos.setBounds(40, 420, 500, 30);
-		derechos.setFont(new Font("Tahoma", 2, 14));
+		derechos.setFont(new Font("Microsoft New Tai Lue", 2, 14));
 		derechos.setForeground(blanco);
 		add(derechos);
 
 		ingresar = new JButton("Ingresar");
 		ingresar.setBounds(260, 350, 100, 30);
 		ingresar.setBackground(color);
-		ingresar.setFont(new Font("Tahoma", 1, 14));
+		ingresar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		ingresar.setForeground(blanco);
 		ingresar.addActionListener(this);
 		ingresar.addKeyListener(this);

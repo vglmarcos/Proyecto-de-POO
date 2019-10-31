@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class Login extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener {
+public class Login extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener, WindowListener{
 
 	private JButton ingresar;
 	private JLabel usuario, empresa, derechos, password, tira, tira2;
@@ -15,7 +15,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 	private Conexion db;
 	private Statement st;
 	private ResultSet rs;
-	private Boolean existe;
+	private Boolean existe = false;
 
 	public Login(String title) {
 		this.setLayout(null);
@@ -26,6 +26,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(blanco);
 		this.setIconImage(new ImageIcon(getClass().getResource("images/Logo.png")).getImage());
+		this.addWindowListener(this);
 
 		//iniciamos conexion a la db
 		db = new Conexion();
@@ -110,9 +111,13 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 			} else {
 				try {
 					st = db.getConexion().createStatement();
-					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario WHERE nom_usu = '" + usuario1 + 
-					"' AND contra_usu = '" + password1 + "'");
-					existe = rs.next();
+					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario");
+					while(rs.next()) {
+						if(rs.getString("nom_usu").equals(usuario1) && rs.getString("contra_usu").equals(password1)) {
+							existe = true;
+							break;
+						}
+					}
 				} catch(SQLException err) {
 					JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -120,14 +125,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 					try {
 						db.desconectar();
 						System.out.println("Se ha desconectado de la base de datos.");
+						JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
+						JOptionPane.INFORMATION_MESSAGE);
+						Menu m = new Menu("Men\u00FA");
+						m.setVisible(true);
+						this.setVisible(false);
 					} catch (SQLException err) {
 						JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
-					JOptionPane.INFORMATION_MESSAGE);
-					Menu m = new Menu("Men\u00FA");
-					m.setVisible(true);
-					this.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.",
 					"Error", JOptionPane.ERROR_MESSAGE);
@@ -159,9 +164,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 			} else {
 				try {
 					st = db.getConexion().createStatement();
-					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario WHERE nom_usu = '" + usuario1 + 
-					"' AND contra_usu = '" + password1 + "'");
-					existe = rs.next();
+					rs = st.executeQuery("SELECT nom_usu, contra_usu FROM Usuario WHERE nom_usu = '" + 
+					usuario1 + "' AND contra_usu = '" + password1 + "'");
+					while(rs.next()) {
+						if(rs.getString("nom_usu").equals(usuario1) && rs.getString("contra_usu").equals(password1)) {
+							existe = true;
+							break;
+						}
+					}
 				} catch(SQLException err) {
 					JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -169,14 +179,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 					try {
 						db.desconectar();
 						System.out.println("Se ha desconectado de la base de datos.");
+						JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
+						JOptionPane.INFORMATION_MESSAGE);
+						Menu m = new Menu("Men\u00FA");
+						m.setVisible(true);
+						this.setVisible(false);
 					} catch (SQLException err) {
 						JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
-					JOptionPane.INFORMATION_MESSAGE);
-					Menu m = new Menu("Men\u00FA");
-					m.setVisible(true);
-					this.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "Usuario o contrase\u00f1a incorrectos.",
 					"Error", JOptionPane.ERROR_MESSAGE);
@@ -238,7 +248,48 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
     @Override
     public void mouseClicked(MouseEvent evt) {
         
-    }
+	}
+	
+	//Eventos de ventana
+	@Override
+	public void windowClosing(WindowEvent evt) {
+		try {
+			db.desconectar();
+			System.out.println("Se ha desconectado de la base de datos.");
+		} catch (SQLException err) {
+			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent evt) {
+
+	}
+
+	@Override
+	public void windowActivated(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent evt) {
+		
+	}
 
 	public static void main(String args[]) {
 		Login login = new Login("Ingresar");

@@ -3,15 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class Login extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener, WindowListener{
+public class Login extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener, WindowListener {
 
 	private JButton ingresar;
 	private JLabel usuario, empresa, derechos, password, tira, tira2;
 	private JTextField usuarioField;
 	private JPasswordField passwordField;
-	private Color color = new Color(50, 203, 185);
-	private Color blanco = new Color(255, 255, 255);
-	private Color label = new Color(224, 224, 224);
 	private Conexion db;
 	private Statement st;
 	private ResultSet rs;
@@ -24,7 +21,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		this.setResizable(false);
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setBackground(blanco);
+		this.getContentPane().setBackground(new Color(255, 255, 255));
 		this.setIconImage(new ImageIcon(getClass().getResource("images/Logo.png")).getImage());
 		this.addWindowListener(this);
 
@@ -45,14 +42,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		usuario = new JLabel("Usuario");
 		usuario.setBounds(80, 250, 100, 30);
 		usuario.setFont(new Font("Microsoft New Tai Lue", 1, 16));
-		usuario.setForeground(color);
+		usuario.setForeground(new Color(50, 203, 185));
 		add(usuario);
 
 		usuarioField = new JTextField();
 		usuarioField.setBounds(200, 250, 250, 30);
-		usuarioField.setBackground(label);
+		usuarioField.setBackground(new Color(224, 224, 224));
 		usuarioField.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		usuarioField.setForeground(color);
+		usuarioField.setForeground(new Color(50, 203, 185));
 		usuarioField.addKeyListener(this);
 		usuarioField.addFocusListener(this);
 		add(usuarioField);
@@ -60,13 +57,13 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		password = new JLabel("Contrase\u00f1a");
 		password.setBounds(80, 300, 100, 30);
 		password.setFont(new Font("Microsoft New Tai Lue", 1, 16));
-		password.setForeground(color);
+		password.setForeground(new Color(50, 203, 185));
 		add(password);
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(200, 300, 250, 30);
-		passwordField.setBackground(label);
-		passwordField.setForeground(color);
+		passwordField.setBackground(new Color(224, 224, 224));
+		passwordField.setForeground(new Color(50, 203, 185));
 		passwordField.addKeyListener(this);
 		passwordField.addFocusListener(this);
 		add(passwordField);
@@ -74,14 +71,14 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		derechos = new JLabel("Cristaler\u00eda San Rom\u00e1n. \u00A9 Copyright 2019. Todos los derechos reservados.");
 		derechos.setBounds(40, 420, 500, 30);
 		derechos.setFont(new Font("Microsoft New Tai Lue", 2, 14));
-		derechos.setForeground(blanco);
+		derechos.setForeground(new Color(255, 255, 255));
 		add(derechos);
 
 		ingresar = new JButton("Ingresar");
 		ingresar.setBounds(260, 350, 100, 30);
-		ingresar.setBackground(color);
+		ingresar.setBackground(new Color(50, 203, 185));
 		ingresar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		ingresar.setForeground(blanco);
+		ingresar.setForeground(new Color(255, 255, 255));
 		ingresar.addActionListener(this);
 		ingresar.addKeyListener(this);
 		ingresar.addFocusListener(this);
@@ -199,28 +196,28 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 	@Override
     public void focusGained(FocusEvent evt) {
 		if(evt.getSource() == this.usuarioField) {
-			this.usuarioField.setBackground(color);
-			this.usuarioField.setForeground(blanco);
+			this.usuarioField.setBackground(new Color(50, 203, 185));
+			this.usuarioField.setForeground(new Color(255, 255, 255));
 		} else if(evt.getSource() == this.passwordField) {
-			this.passwordField.setBackground(color);
-			this.passwordField.setForeground(blanco);
+			this.passwordField.setBackground(new Color(50, 203, 185));
+			this.passwordField.setForeground(new Color(255, 255, 255));
 		} else if(evt.getSource() == this.ingresar) {
-			this.ingresar.setBackground(blanco);
-			this.ingresar.setForeground(color);
+			this.ingresar.setBackground(new Color(255, 255, 255));
+			this.ingresar.setForeground(new Color(50, 203, 185));
 		}
     }
 
     @Override
     public void focusLost(FocusEvent evt) {
 		if(evt.getSource() == this.usuarioField) {
-			this.usuarioField.setBackground(label);
-			this.usuarioField.setForeground(color);
+			this.usuarioField.setBackground(new Color(224, 224, 224));
+			this.usuarioField.setForeground(new Color(50, 203, 185));
 		} else if(evt.getSource() == this.passwordField) {
-			this.passwordField.setBackground(label);
-			this.passwordField.setForeground(color);
+			this.passwordField.setBackground(new Color(224, 224, 224));
+			this.passwordField.setForeground(new Color(50, 203, 185));
 		} else if(evt.getSource() == this.ingresar) {
-			this.ingresar.setBackground(color);
-			this.ingresar.setForeground(blanco);
+			this.ingresar.setBackground(new Color(50, 203, 185));
+			this.ingresar.setForeground(new Color(255, 255, 255));
 		}
 	}
 	
@@ -250,7 +247,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
         
 	}
 	
-	//Eventos de ventana
+	//ventana
 	@Override
 	public void windowClosing(WindowEvent evt) {
 		try {

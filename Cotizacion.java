@@ -5,10 +5,8 @@ import java.sql.*;
 import java.util.Calendar;
 import javax.swing.table.*;
 
-public class Cotizacion extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener {
+public class Cotizacion extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener, WindowListener {
 
-	private Color blanco = new Color(255, 255, 255);
-	private Color label = new Color(224, 224, 224);
 	private JButton regresar, agregar, guardar;
 	private JLabel tira, no_cot, fechaLabel, total, iva, sbt;
 	private JTextField no_cotField;
@@ -21,6 +19,7 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 	private DefaultTableModel modelo;
 	private JTable tabla;
 	private JScrollPane scroll;
+	private JPanel agregarCot, mostrarCot;
 
 	public Cotizacion(String title) {
 		this.setLayout(null);;
@@ -29,8 +28,23 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		this.setLocationRelativeTo(null);
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setBackground(blanco);
+		this.getContentPane().setBackground(new Color(255, 255, 255));
 		this.setIconImage(new ImageIcon(getClass().getResource("images/Logo.png")).getImage());
+		this.addWindowListener(this);
+
+		//Panel para agregar cotizacion
+		agregarCot = new JPanel();
+		agregarCot.setBackground(new Color(255, 255, 255));
+		agregarCot.setBounds(0, 0, 810, 650);
+		agregarCot.setLayout(null);
+		agregarCot.setVisible(false);
+		
+		//Panel para mostrar detalles de cotizacion
+		mostrarCot = new JPanel();
+		mostrarCot.setBackground(new Color(255, 255, 255));
+		mostrarCot.setBounds(0, 0, 810, 650);
+		mostrarCot.setLayout(null);
+		mostrarCot.setVisible(true);
 
 		//obtenemos fecha actual
 		fecha = Calendar.getInstance();
@@ -51,28 +65,36 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
+		panelMostrarCot();
+		panelAgregarCot();
+
+		this.add(mostrarCot);
+		this.add(agregarCot);
+	}
+
+	public void panelMostrarCot() {
 		no_cot = new JLabel("No. Cotizaci\u00F3n");
 		no_cot.setBounds(30, 70, 150, 30);
 		no_cot.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		no_cot.setForeground(new Color(0, 153, 153));
-		add(no_cot);
+		mostrarCot.add(no_cot);
 
 		no_cotField = new JTextField();
 		no_cotField.setBounds(170, 70, 50, 30);
-		no_cotField.setBackground(label);
+		no_cotField.setBackground(new Color(224, 224, 224));
 		no_cotField.setFont(new Font("Microsoft New Tai Lue", 1, 14));
 		no_cotField.setText(Integer.valueOf(id).toString());
 		no_cotField.setHorizontalAlignment(JTextField.CENTER); 
 		no_cotField.setEditable(false);
 		no_cotField.setForeground(new Color(0, 153, 153));
 		no_cotField.addKeyListener(this);
-		add(no_cotField);
+		mostrarCot.add(no_cotField);
 
 		fechaLabel = new JLabel("Fecha: " + dia + "/" + mes + "/" + anio);
 		fechaLabel.setBounds(620, 70, 200, 30);
 		fechaLabel.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		fechaLabel.setForeground(new Color(0, 0, 0));
-		add(fechaLabel);
+		mostrarCot.add(fechaLabel);
 
 		String[] campos = new String[]{"Id", "Nombre", "Tipo", "Precio unitario", "Largo", "Ancho", 
 									   "Cantidad", "Precio total"};
@@ -104,7 +126,7 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		tabla.setBackground(new Color(255, 255, 255));
 		tabla.setForeground(new Color(0, 0, 0));
 		tabla.setFont(new Font("Microsoft New Tai Lue", 0, 14));
-		this.add(scroll);
+		mostrarCot.add(scroll);
 
 		modelo.addRow(new String[]{"1", "Cristal", "Barandal", "1200", "800", "600", "5", "1200"});
 		modelo.addRow(new String[]{"2", "Cristal", "Barandal", "1200", "800", "600", "5", "1200"});
@@ -113,57 +135,64 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 		sbt.setBounds(690, 390, 100, 30);
 		sbt.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		sbt.setForeground(new Color(0, 0, 0));
-		add(sbt);
+		mostrarCot.add(sbt);
 
 		iva = new JLabel("IVA: 16 \u0025");
 		iva.setBounds(690, 420, 100, 30);
 		iva.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		iva.setForeground(new Color(0, 0, 0));
-		add(iva);
+		mostrarCot.add(iva);
 		
 		total = new JLabel("Total: \u0024 0");
 		total.setBounds(690, 450, 100, 30);
 		total.setFont(new Font("Microsoft New Tai Lue", 1, 16));
 		total.setForeground(new Color(0, 0, 0));
-		add(total);
+		mostrarCot.add(total);
 
 		regresar = new JButton("Regresar");
 		regresar.setBounds(120, 480, 100, 30);
 		regresar.setBackground(new Color(0, 153, 153));
 		regresar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		regresar.setForeground(blanco);
+		regresar.setForeground(new Color(255, 255, 255));
 		regresar.addActionListener(this);
 		regresar.addKeyListener(this);
-		add(regresar);
+		mostrarCot.add(regresar);
 
 		agregar = new JButton("Agregar");
 		agregar.setBounds(320, 480, 100, 30);
 		agregar.setBackground(new Color(0, 153, 153));
 		agregar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		agregar.setForeground(blanco);
+		agregar.setForeground(new Color(255, 255, 255));
 		agregar.addActionListener(this);
 		agregar.addKeyListener(this);
-		add(agregar);
+		mostrarCot.add(agregar);
 
 		guardar = new JButton("Guardar");
 		guardar.setBounds(520, 480, 100, 30);
 		guardar.setBackground(new Color(0, 153, 153));
 		guardar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		guardar.setForeground(blanco);
+		guardar.setForeground(new Color(255, 255, 255));
 		guardar.addActionListener(this);
 		guardar.addKeyListener(this);
-		add(guardar);
+		mostrarCot.add(guardar);
 
 		ImageIcon tira_imagen = new ImageIcon("images/tira.png");
 		tira = new JLabel(tira_imagen);
 		tira.setBounds(0, 550, 810, 100);
-		add(tira);
+		mostrarCot.add(tira);
+	}
+
+	public void panelAgregarCot() {
+		ImageIcon tira_imagen = new ImageIcon("images/tira.png");
+		tira = new JLabel(tira_imagen);
+		tira.setBounds(0, 550, 810, 100);
+		agregarCot.add(tira);
 	}
 
 	//botones
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		if(evt.getSource() == regresar) {
+		if(evt.getSource() == this.regresar) {
 			Menu m = new Menu("Men\u00FA");
 			m.setVisible(true);
 			this.setVisible(false);
@@ -173,6 +202,9 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
 			} catch(SQLException err) {
 				JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if(evt.getSource() == this.agregar) {
+			mostrarCot.setVisible(false);
+			agregarCot.setVisible(true);
 		}
 	}
 
@@ -241,5 +273,46 @@ public class Cotizacion extends JFrame implements ActionListener, KeyListener, F
     @Override
     public void mouseClicked(MouseEvent evt) {
         
-    }
+	}
+	
+	//ventana
+	@Override
+	public void windowClosing(WindowEvent evt) {
+		try {
+			db.desconectar();
+			System.out.println("Se ha desconectado de la base de datos.");
+		} catch (SQLException err) {
+			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent evt) {
+
+	}
+
+	@Override
+	public void windowActivated(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent evt) {
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent evt) {
+		
+	}
 }

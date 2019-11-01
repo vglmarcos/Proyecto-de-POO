@@ -29,7 +29,6 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 		db = new Conexion();
 		try {
 			db.conectar();
-			System.out.println("Se ha establecido conexion a la base de datos.");
 		} catch(SQLException err) {
 			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -121,7 +120,6 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 				if(existe) {
 					try {
 						db.desconectar();
-						System.out.println("Se ha desconectado de la base de datos.");
 						JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
 						JOptionPane.INFORMATION_MESSAGE);
 						Menu m = new Menu("Men\u00FA");
@@ -175,7 +173,6 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 				if(existe) {
 					try {
 						db.desconectar();
-						System.out.println("Se ha desconectado de la base de datos.");
 						JOptionPane.showMessageDialog(null, "Bienvenido " + usuario1 + ".", "Bienvenida", 
 						JOptionPane.INFORMATION_MESSAGE);
 						Menu m = new Menu("Men\u00FA");
@@ -252,7 +249,6 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 	public void windowClosing(WindowEvent evt) {
 		try {
 			db.desconectar();
-			System.out.println("Se ha desconectado de la base de datos.");
 		} catch (SQLException err) {
 			JOptionPane.showMessageDialog(null, "Error: " + err, "Error", JOptionPane.ERROR_MESSAGE);
 		}

@@ -61,6 +61,7 @@ public class Login extends JFrame implements ActionListener, KeyListener, FocusL
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(210, 300, 280, 30);
+		passwordField.setFont(new Font("Microsoft New Tai Lue", 0, 18));
 		passwordField.setBackground(new Color(224, 224, 224));
 		passwordField.setForeground(new Color(0, 153, 153));
 		passwordField.addKeyListener(this);

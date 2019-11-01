@@ -4,8 +4,6 @@ import java.awt.event.*;
 
 public class Menu extends JFrame implements ActionListener, KeyListener, FocusListener, MouseListener {
 
-	private Color blanco = new Color(255, 255, 255);
-	private Color color = new Color(50, 203, 185);
 	private JLabel tira;
 	private JButton cot;
 	private JMenuBar mb;
@@ -19,37 +17,38 @@ public class Menu extends JFrame implements ActionListener, KeyListener, FocusLi
 		this.setLocationRelativeTo(null);
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setBackground(blanco);
+		this.getContentPane().setBackground(new Color(255, 255, 255));
 		this.setIconImage(new ImageIcon(getClass().getResource("images/Logo.png")).getImage());
 
 		mb = new JMenuBar();
-		mb.setBackground(color);
+		mb.setBackground(new Color(0, 153, 153));
 		this.setJMenuBar(mb);
 
 		opciones = new JMenu("Opciones");
-		opciones.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		opciones.setForeground(blanco);
-		opciones.setBackground(color);
+		opciones.setFont(new Font("Microsoft New Tai Lue", 0, 16));
+		opciones.setForeground(new Color(255, 255, 255));
+		opciones.setBackground(new Color(0, 153, 153));
 		mb.add(opciones);
 
 		cerrar = new JMenuItem("Cerrar sesi\u00F3n");
-		cerrar.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		cerrar.setForeground(color);
+		cerrar.setFont(new Font("Microsoft New Tai Lue", 0, 16));
+		cerrar.setForeground(new Color(0, 153, 153));
 		opciones.add(cerrar);
 		cerrar.addActionListener(this);
 
 		cot = new JButton("Generar cotizaci\u00F3n");
 		cot.setBounds(240, 350, 180, 30);
-		cot.setBackground(color);
-		cot.setFont(new Font("Microsoft New Tai Lue", 1, 14));
-		cot.setForeground(blanco);
+		cot.setBackground(new Color(0, 153, 153));
+		cot.setFont(new Font("Microsoft New Tai Lue", 0, 18));
+		cot.setForeground(new Color(255, 255, 255));
 		cot.addActionListener(this);
 		cot.addKeyListener(this);
 		add(cot);
 
-		ImageIcon tira_imagen = new ImageIcon("images/tira.png");
-		tira = new JLabel(tira_imagen);
-		tira.setBounds(0, 525, 700, 100);
+		tira = new JLabel("");
+		tira.setOpaque(true);
+		tira.setBounds(0, 550, 700, 50);
+		tira.setBackground(new Color(0, 0, 0));
 		add(tira);
 	}
 
